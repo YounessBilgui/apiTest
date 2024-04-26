@@ -57,6 +57,12 @@ class testController extends Controller
     public function show(string $id)
     {
         //
+        $response = Profile::where('id',$id);
+        if (!empty($response)) {
+            return response()->json($response);
+        } else {
+            return response()->json(["message" => "data not found"], 404);
+        }
     }
 
     /**
