@@ -40,6 +40,15 @@ class testController extends Controller
         if(!$request->first_name && !$request->last_name){
             return response()->json(['message'=>'Error 404'],404);
         }
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images'),$imageName);
+            return response()->json(['message'=>'Image Saved']);
+        }else{
+            return response()->json(['message'=>'There is an error']);
+        }
+        
         $profile = new Profile();
         $profile->first_name = $request->first_name;
         $profile->last_name = $request->last_name;
